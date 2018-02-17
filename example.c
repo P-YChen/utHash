@@ -79,7 +79,8 @@ void sort_by_id()
 
 int main(int argc, char *argv[])
 {
-    char in[10];
+    char in[10] = {0};
+    char in_buf[10] = {0};
     int id=1, running=1;
     struct my_struct *s;
     unsigned num_users;
@@ -95,27 +96,34 @@ int main(int argc, char *argv[])
         printf(" 8. print users\n");
         printf(" 9. count users\n");
         printf("10. quit\n");
+        memset(in_buf, 0, sizeof(in_buf));
+        memset(in, 0, sizeof(in));
         gets(in);
+        
         switch(atoi(in)) {
             case 1:
                 printf("name?\n");
-                add_user(id++, gets(in));
+                gets(in_buf);
+                add_user(id++, in_buf);
                 break;
             case 2:
                 printf("id?\n");
-                gets(in);
-                id = atoi(in);
+                gets(in_buf);
+                id = atoi(in_buf);
                 printf("name?\n");
-                add_user(id, gets(in));
+                gets(in_buf);
+                add_user(id, in_buf);
                 break;
             case 3:
                 printf("id?\n");
-                s = find_user(atoi(gets(in)));
+                gets(in_buf);
+                s = find_user(atoi(in_buf));
                 printf("user: %s\n", s ? s->name : "unknown");
                 break;
             case 4:
                 printf("id?\n");
-                s = find_user(atoi(gets(in)));
+                gets(in_buf);
+                s = find_user(atoi(in_buf));
                 if (s) {
                     delete_user(s);
                 } else {
