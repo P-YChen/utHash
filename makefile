@@ -3,7 +3,7 @@ OBJ:=$(TARGET).o
 SRC:=$(TARGET).c
 TARGET1:=ut_string
 OBJ1:=$(TARGET1).o
-SRC1:=TARGET1).c
+SRC1:=$(TARGET1).c
 
 $(TARGET):$(OBJ)
 	gcc $(OBJ) -o $(TARGET)
