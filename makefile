@@ -8,3 +8,6 @@ $(TARGET):$(OBJ)
 	
 $(OBJ):$(SRC)
 	gcc -c $(SRC) -o $(OBJ) -Iinclude
+	
+clean:
+	rm $(OBJ) $(TARGET)
