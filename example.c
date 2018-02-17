@@ -13,11 +13,15 @@ struct my_struct *users = NULL;
 
 void add_user(int user_id, char *name)
 {
-    struct my_struct *s;
+    struct my_struct *s = NULL;
 
     HASH_FIND_INT(users, &user_id, s);  /* id already in the hash? */
     if (s==NULL) {
         s = (struct my_struct*)malloc(sizeof(struct my_struct));
+        if (s == NULL) {
+            printf("add_user malloc fail!\n");
+            return -1;
+        }
         s->id = user_id;
         HASH_ADD_INT( users, id, s );  /* id: name of key field */
     }
@@ -50,7 +54,7 @@ void delete_all()
 
 void print_users()
 {
-    struct my_struct *s;
+    struct my_struct *s = NULL;
 
     for(s=users; s != NULL; s=(struct my_struct*)(s->hh.next)) {
         printf("user id %d: name %s\n", s->id, s->name);
