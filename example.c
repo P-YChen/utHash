@@ -28,11 +28,36 @@ void add_user(int user_id, char *name)
     strcpy(s->name, name);
 }
 
+void add_user_by_name(int user_id, char *name)
+{
+    struct my_struct *s = NULL;
+
+    HASH_FIND_STR(users, name, s);
+    if (s == NULL) {
+        s = (struct my_struct *)uthash_malloc(sizeof(struct my_struct));
+        if (s == NULL) {
+            printf("add_user_by_name malloc fail!\n");
+            return -1;
+        }
+        s->id = user_id;
+        strcpy(s->name, name);
+        HASH_ADD_STR(users, name, s);
+    }
+}
+
 struct my_struct *find_user(int user_id)
 {
     struct my_struct *s;
 
     HASH_FIND_INT( users, &user_id, s );  /* s: output pointer */
+    return s;
+}
+
+struct my_struct *find_user_by_name(char *name)
+{
+    struct my_struct *s = NULL;
+
+    HASH_FIND_STR(users,name,s);
     return s;
 }
 
@@ -100,6 +125,8 @@ int main(int argc, char *argv[])
         printf(" 8. print users\n");
         printf(" 9. count users\n");
         printf("10. quit\n");
+        printf("11. add users by name\n");
+        printf("12. find users by name\n");
         memset(in_buf, 0, sizeof(in_buf));
         memset(in, 0, sizeof(in));
         gets(in);
@@ -152,6 +179,17 @@ int main(int argc, char *argv[])
                 break;
             case 10:
                 running=0;
+                break;
+            case 11:
+                printf("name?\n");
+                gets(in_buf);
+                add_user_by_name(id++, in_buf);
+                break;
+            case 12:
+                printf("name?\n");
+                gets(in_buf);
+                s = find_user(in_buf);
+                printf("user: %s\n", s ? s->name : "unknown");
                 break;
         }
     }
