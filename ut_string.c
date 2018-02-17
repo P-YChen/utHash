@@ -1,4 +1,4 @@
-#include "Utstring.h"
+#include "utstring.h"
 
 UT_string *buf = NULL;
 
